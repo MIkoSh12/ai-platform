@@ -3,26 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upscale-Studio</title>
+  <title>UpscaleStudio — Meirbek Muslimov</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #08080F;
-      --bg2: #0F0F1A;
-      --bg3: #13131F;
-      --card: #0E0E1C;
-      --border: rgba(255,255,255,0.08);
-      --border2: rgba(255,255,255,0.14);
-      --text: #F0EFFF;
-      --muted: #8E8BA8;
-      --accent1: #7C3AED;
-      --accent2: #2563EB;
-      --accent3: #06B6D4;
-      --glow: rgba(124,58,237,0.18);
+      --bg:      #070710;
+      --bg2:     #0C0C1A;
+      --card:    #0F0F1E;
+      --border:  rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.13);
+      --text:    #EEEEFF;
+      --muted:   #7B78A0;
+      --soft:    #B0ADCC;
+      --accent:  #8B5CF6;
+      --accent2: #06B6D4;
+      --gold:    #F59E0B;
     }
 
     html { scroll-behavior: smooth; }
@@ -32,11 +31,41 @@
       color: var(--text);
       font-family: 'Inter', sans-serif;
       font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.65;
       overflow-x: hidden;
     }
 
-    /* ——— NAV ——— */
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      position: fixed;
+      top: 20px; right: 24px;
+      z-index: 200;
+      display: flex;
+      gap: 4px;
+      background: rgba(15,15,30,0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 4px;
+    }
+    .lang-btn {
+      padding: 5px 12px;
+      border: none;
+      border-radius: 5px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -44,739 +73,934 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 48px;
-      background: rgba(8,8,15,0.7);
+      padding: 20px 52px;
+      background: rgba(7,7,16,0.75);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
       letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #A78BFA, #60A5FA);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--text);
     }
-
+    .nav-logo span { color: var(--accent); }
     .nav-links {
       display: flex;
       gap: 36px;
       list-style: none;
     }
-
     .nav-links a {
       text-decoration: none;
       color: var(--muted);
       font-size: 14px;
-      font-weight: 400;
       transition: color 0.2s;
     }
-
     .nav-links a:hover { color: var(--text); }
 
-    .nav-cta {
-      padding: 9px 22px;
-      border: 1px solid rgba(124,58,237,0.5);
-      border-radius: 8px;
-      background: rgba(124,58,237,0.12);
-      color: #A78BFA;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .nav-cta:hover {
-      background: rgba(124,58,237,0.22);
-      border-color: rgba(124,58,237,0.8);
-    }
-
-    /* ——— HERO ——— */
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
+      padding: 120px 52px 80px;
+      gap: 60px;
       position: relative;
       overflow: hidden;
     }
-
     .hero-orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(100px);
+      filter: blur(120px);
       pointer-events: none;
     }
-
     .orb1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
-      top: -100px; left: 50%;
-      transform: translateX(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%);
+      top: -80px; right: -80px;
     }
-
     .orb2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
-      bottom: 0; right: 10%;
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%);
+      bottom: 0; left: 0;
     }
 
-    .orb3 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
-      bottom: 100px; left: 5%;
-    }
+    .hero-left { position: relative; z-index: 1; }
 
-    .hero-badge {
+    .hero-tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 16px;
-      border: 1px solid rgba(167,139,250,0.3);
-      border-radius: 100px;
-      background: rgba(124,58,237,0.1);
-      font-size: 13px;
-      color: #A78BFA;
+      font-size: 12px;
       font-weight: 500;
-      margin-bottom: 28px;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 24px;
     }
-
-    .hero-badge::before {
+    .hero-tag::before {
       content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #A78BFA;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--accent2);
     }
 
     .hero h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(42px, 7vw, 84px);
-      font-weight: 700;
-      line-height: 1.05;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(40px, 5vw, 68px);
+      font-weight: 800;
+      line-height: 1.0;
       letter-spacing: -2px;
-      max-width: 900px;
       margin-bottom: 24px;
     }
-
-    .gradient-text {
-      background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 50%, #34D399 100%);
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #A78BFA, #06B6D4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: shimmer 4s ease-in-out infinite;
-      background-size: 200%;
     }
 
-    @keyframes shimmer {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--soft);
+      max-width: 440px;
+      line-height: 1.75;
+      margin-bottom: 40px;
     }
 
-    .hero-sub {
-      font-size: 18px;
-      color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto 44px;
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    .hero-actions {
+    .hero-btns {
       display: flex;
-      gap: 14px;
-      justify-content: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
-
     .btn-primary {
-      padding: 14px 32px;
-      background: linear-gradient(135deg, #7C3AED, #2563EB);
+      padding: 13px 28px;
+      background: var(--accent);
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       color: #fff;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', sans-serif;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.2s;
-      box-shadow: 0 4px 32px rgba(124,58,237,0.35);
     }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(124,58,237,0.5);
-    }
+    .btn-primary:hover { background: #7C3AED; transform: translateY(-1px); }
 
     .btn-ghost {
-      padding: 14px 32px;
+      padding: 13px 28px;
       background: transparent;
       border: 1px solid var(--border2);
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 15px;
+      border-radius: 8px;
+      color: var(--soft);
+      font-size: 14px;
       font-weight: 500;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', sans-serif;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.2s;
     }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
 
-    .btn-ghost:hover {
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(255,255,255,0.25);
-    }
-
-    /* ——— STATS ——— */
-    .stats-row {
+    /* ── HERO RIGHT — avatar card ── */
+    .hero-right {
       display: flex;
       justify-content: center;
-      gap: 64px;
-      padding: 28px 48px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg2);
-      margin-top: 80px;
-      flex-wrap: wrap;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #A78BFA, #60A5FA);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 2px;
-      font-weight: 400;
-    }
-
-    /* ——— FEATURES ——— */
-    .section {
-      padding: 100px 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-eyebrow {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #A78BFA;
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(30px, 4vw, 48px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      max-width: 580px;
-      margin-bottom: 16px;
-    }
-
-    .section-desc {
-      color: var(--muted);
-      max-width: 480px;
-      font-size: 16px;
-      line-height: 1.7;
-      margin-bottom: 60px;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .feature-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(167,139,250,0.5), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .feature-card:hover {
-      border-color: rgba(124,58,237,0.35);
-      transform: translateY(-4px);
-    }
-
-    .feature-card:hover::before { opacity: 1; }
-
-    .feature-icon {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-
-    .icon-purple { background: rgba(124,58,237,0.15); }
-    .icon-blue   { background: rgba(37,99,235,0.15); }
-    .icon-cyan   { background: rgba(6,182,212,0.15); }
-    .icon-green  { background: rgba(16,185,129,0.15); }
-    .icon-pink   { background: rgba(236,72,153,0.15); }
-    .icon-amber  { background: rgba(245,158,11,0.15); }
-
-    .feature-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      letter-spacing: -0.3px;
-    }
-
-    .feature-desc {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .feature-tag {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-
-    .tag-purple { background: rgba(124,58,237,0.15); color: #A78BFA; }
-    .tag-blue   { background: rgba(37,99,235,0.15);  color: #93C5FD; }
-    .tag-cyan   { background: rgba(6,182,212,0.15);  color: #67E8F9; }
-    .tag-green  { background: rgba(16,185,129,0.15); color: #6EE7B7; }
-    .tag-pink   { background: rgba(236,72,153,0.15); color: #F9A8D4; }
-    .tag-amber  { background: rgba(245,158,11,0.15); color: #FCD34D; }
-
-    /* ——— HOW IT WORKS ——— */
-    .how-section {
-      padding: 100px 48px;
-      background: var(--bg2);
-    }
-
-    .how-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0;
-      margin-top: 60px;
-      position: relative;
-    }
-
-    .steps::after {
-      content: '';
-      position: absolute;
-      top: 28px;
-      left: 10%;
-      right: 10%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.4), rgba(37,99,235,0.4), transparent);
-    }
-
-    .step {
-      text-align: center;
-      padding: 0 20px;
       position: relative;
       z-index: 1;
     }
-
-    .step-num {
-      width: 56px; height: 56px;
+    .avatar-card {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 24px;
+      padding: 40px 36px;
+      text-align: center;
+      width: 300px;
+      position: relative;
+    }
+    .avatar-circle {
+      width: 100px; height: 100px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #7C3AED, #2563EB);
+      background: linear-gradient(135deg, #8B5CF6, #06B6D4);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
       margin: 0 auto 20px;
-      box-shadow: 0 0 30px rgba(124,58,237,0.3);
+    }
+    .avatar-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .avatar-role {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .avatar-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .astat {
+      background: var(--bg2);
+      border-radius: 10px;
+      padding: 12px 8px;
+    }
+    .astat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .astat-lbl {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #34D399;
+      background: rgba(52,211,153,0.1);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 100px;
+      padding: 5px 12px;
+    }
+    .status-dot::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #34D399;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
-    .step-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 16px;
+    /* ── SECTION BASE ── */
+    .sec {
+      padding: 96px 52px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .sec-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 52px;
+    }
+    .eyebrow {
+      font-size: 11px;
       font-weight: 600;
-      margin-bottom: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .sec-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .sec-sub {
+      color: var(--soft);
+      font-size: 16px;
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 56px;
     }
 
-    .step-desc {
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .about-text p {
+      color: var(--soft);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .skills-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .skill-tag {
+      padding: 6px 14px;
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      font-size: 13px;
+      color: var(--soft);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--text); }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .about-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .about-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .about-card p {
       font-size: 13px;
       color: var(--muted);
       line-height: 1.6;
     }
 
-    /* ——— CTA ——— */
-    .cta-section {
-      padding: 120px 48px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    /* ── PORTFOLIO ── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
     }
-
-    .cta-glow {
-      position: absolute;
-      width: 700px; height: 400px;
-      background: radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%);
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .cta-box {
-      max-width: 680px;
-      margin: 0 auto;
-      background: var(--card);
-      border: 1px solid rgba(124,58,237,0.25);
-      border-radius: 24px;
-      padding: 64px 48px;
-      position: relative;
-    }
-
-    .cta-box h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 16px;
-    }
-
-    .cta-box p {
-      color: var(--muted);
-      font-size: 16px;
-      margin-bottom: 36px;
-    }
-
-    /* ——— GITHUB SECTION ——— */
-    .github-section {
-      padding: 80px 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .github-card {
+    .proj-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 36px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      flex-wrap: wrap;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
     }
-
-    .github-left h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .proj-card:hover {
+      border-color: rgba(139,92,246,0.4);
+      transform: translateY(-4px);
     }
-
-    .github-left p { color: var(--muted); font-size: 15px; max-width: 480px; }
-
-    .github-steps {
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .github-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 14px;
-    }
-
-    .gh-num {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: rgba(124,58,237,0.2);
-      border: 1px solid rgba(124,58,237,0.4);
+    .proj-thumb {
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .thumb-up  { background: linear-gradient(135deg, #1A1035, #2D1B69); }
+    .thumb-vid { background: linear-gradient(135deg, #0A1628, #1E3A5F); }
+    .thumb-res { background: linear-gradient(135deg, #0D1F0D, #1A3D1A); }
+    .thumb-stl { background: linear-gradient(135deg, #1F0D1F, #3D1A3D); }
+
+    .proj-body { padding: 20px 22px; }
+    .proj-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .tag-purple { background: rgba(139,92,246,0.15); color: #A78BFA; }
+    .tag-blue   { background: rgba(6,182,212,0.15);  color: #67E8F9; }
+    .tag-green  { background: rgba(52,211,153,0.15); color: #6EE7B7; }
+    .tag-pink   { background: rgba(236,72,153,0.15); color: #F9A8D4; }
+
+    .proj-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .proj-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── SERVICES / PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .price-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 26px;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .price-card:hover { border-color: rgba(139,92,246,0.35); }
+    .price-card.featured {
+      border-color: var(--accent);
+      background: linear-gradient(145deg, #110C2A, #0F0F1E);
+    }
+    .featured-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
       font-size: 11px;
       font-weight: 700;
-      color: #A78BFA;
-      flex-shrink: 0;
-      margin-top: 1px;
+      letter-spacing: 0.08em;
+      padding: 4px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
     }
-
-    .gh-text { color: var(--muted); line-height: 1.5; }
-    .gh-text code {
-      background: rgba(255,255,255,0.07);
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
+    .price-icon { font-size: 28px; margin-bottom: 14px; }
+    .price-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .price-amount {
+      font-family: 'Syne', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .price-amount span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .price-desc {
       font-size: 13px;
-      color: #A78BFA;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .price-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .price-features li {
+      font-size: 13px;
+      color: var(--soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-features li::before {
+      content: '✓';
+      color: var(--accent2);
+      font-weight: 700;
+      flex-shrink: 0;
     }
 
-    /* ——— FOOTER ——— */
+    /* ── CONTACT ── */
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .contact-info p {
+      color: var(--soft);
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--soft);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+    .contact-link-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .ci-email { background: rgba(139,92,246,0.15); }
+    .ci-wa    { background: rgba(37,211,102,0.15); }
+    .ci-ig    { background: rgba(225,48,108,0.15); }
+
+    /* ── ORDER FORM ── */
+    .order-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+    }
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group select option { background: #0F0F1E; }
+
+    .form-submit {
+      width: 100%;
+      padding: 13px;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 6px;
+    }
+    .form-submit:hover { background: #7C3AED; }
+
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 32px 48px;
+      padding: 28px 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 12px;
     }
-
-    footer .logo {
-      font-family: 'Space Grotesk', sans-serif;
+    .foot-logo {
+      font-family: 'Syne', sans-serif;
       font-size: 16px;
-      font-weight: 700;
-      background: linear-gradient(90deg, #A78BFA, #60A5FA);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-weight: 800;
+      color: var(--text);
     }
-
+    .foot-logo span { color: var(--accent); }
     footer p { font-size: 13px; color: var(--muted); }
 
-    /* ——— RESPONSIVE ——— */
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 14px 20px; }
+      nav { padding: 16px 20px; }
       .nav-links { display: none; }
-      .section, .github-section { padding: 60px 20px; }
-      .how-section { padding: 60px 20px; }
-      .cta-section { padding: 60px 20px; }
-      .stats-row { gap: 32px; padding: 24px 20px; }
-      .steps::after { display: none; }
-      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
-      .cta-box { padding: 40px 24px; }
-      .github-card { padding: 24px; }
+      .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; gap: 40px; }
+      .hero-right { display: none; }
+      .sec { padding: 60px 20px; }
+      .sec-divider { margin: 0 20px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      footer { padding: 20px; flex-direction: column; text-align: center; }
+      .lang-toggle { top: 14px; right: 14px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <span class="nav-logo">⬡ Upscale-Studio</span>
-    <ul class="nav-links">
-      <li><a href="#features">Возможности</a></li>
-      <li><a href="#how">Как работает</a></li>
-    </ul>
-    <a href="#features" class="nav-cta">Начать →</a>
-  </nav>
+<!-- LANG TOGGLE -->
+<div class="lang-toggle">
+  <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
+</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-orb orb1"></div>
-    <div class="hero-orb orb2"></div>
-    <div class="hero-orb orb3"></div>
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Upscale<span>Studio</span></span>
+  <ul class="nav-links">
+    <li><a href="#about"     data-ru="Обо мне"      data-en="About">Обо мне</a></li>
+    <li><a href="#portfolio" data-ru="Проекты"       data-en="Portfolio">Проекты</a></li>
+    <li><a href="#pricing"   data-ru="Услуги"        data-en="Services">Услуги</a></li>
+    <li><a href="#contact"   data-ru="Контакты"      data-en="Contact">Контакты</a></li>
+  </ul>
+</nav>
 
-    <div class="hero-badge">AI Platform — Beta</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
 
+  <div class="hero-left">
+    <div class="hero-tag" data-ru="AI-разработчик · Фриланс" data-en="AI Developer · Freelance">AI-разработчик · Фриланс</div>
     <h1>
-      Мощный ИИ для<br/>
-      <span class="gradient-text">Видео, Изображений</span><br/>
-      и многого другого
+      <span data-ru="Мейрбек" data-en="Meirbek">Мейрбек</span><br/>
+      <em>Муслимов</em>
     </h1>
-
-    <p class="hero-sub">
-      Апскейлинг изображений, генерация видео, обработка медиа — всё в одном месте.
-      Создан для разработчиков и креаторов.
+    <p class="hero-desc" data-ru="Создаю AI-инструменты нового поколения — от апскейлинга изображений до генерации видео. Превращаю идеи в готовые продукты, которые реально работают." data-en="I build next-generation AI tools — from image upscaling to video generation. Turning ideas into real, working products.">
+      Создаю AI-инструменты нового поколения — от апскейлинга изображений до генерации видео. Превращаю идеи в готовые продукты, которые реально работают.
     </p>
-
-    <div class="hero-actions">
-      <a href="#features" class="btn-primary">Изучить возможности</a>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat">
-      <div class="stat-num">4K+</div>
-      <div class="stat-label">Апскейлинг до 4K</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">60fps</div>
-      <div class="stat-label">Генерация видео</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">10x</div>
-      <div class="stat-label">Быстрее вручную</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">API</div>
-      <div class="stat-label">Открытый доступ</div>
+    <div class="hero-btns">
+      <a href="#portfolio" class="btn-primary" data-ru="Смотреть проекты" data-en="View Projects">Смотреть проекты</a>
+      <a href="#contact"   class="btn-ghost"   data-ru="Связаться"        data-en="Get in Touch">Связаться</a>
     </div>
   </div>
 
-  <!-- FEATURES -->
-  <section class="section" id="features">
-    <div class="section-eyebrow">Возможности</div>
-    <h2 class="section-title">Всё, что нужно для работы с ИИ-медиа</h2>
-    <p class="section-desc">
-      Набор инструментов для генерации, улучшения и обработки медиаконтента с помощью нейросетей.
-    </p>
-
-    <div class="features-grid">
-
-      <div class="feature-card">
-        <div class="feature-icon icon-purple">🔮</div>
-        <div class="feature-title">AI Апскейлинг</div>
-        <div class="feature-desc">
-          Увеличение разрешения изображений до 4K без потери качества. Умные алгоритмы восстанавливают детали.
+  <div class="hero-right">
+    <div class="avatar-card">
+      <div class="avatar-circle">MM</div>
+      <div class="avatar-name">Мейрбек Муслимов</div>
+      <div class="avatar-role" data-ru="AI Developer & Creator" data-en="AI Developer & Creator">AI Developer & Creator</div>
+      <div class="status-dot" data-ru="Доступен для заказов" data-en="Available for orders">Доступен для заказов</div>
+      <div class="avatar-stats">
+        <div class="astat">
+          <div class="astat-num">20+</div>
+          <div class="astat-lbl" data-ru="Проектов" data-en="Projects">Проектов</div>
         </div>
-        <span class="feature-tag tag-purple">Изображения</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon icon-blue">🎬</div>
-        <div class="feature-title">Генерация видео</div>
-        <div class="feature-desc">
-          Создание видеороликов из текстового описания или изображений. Поддержка до 60 fps.
+        <div class="astat">
+          <div class="astat-num">4K</div>
+          <div class="astat-lbl" data-ru="Апскейлинг" data-en="Upscaling">Апскейлинг</div>
         </div>
-        <span class="feature-tag tag-blue">Видео</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon icon-cyan">✨</div>
-        <div class="feature-title">Улучшение качества</div>
-        <div class="feature-desc">
-          Удаление шумов, восстановление старых фото, коррекция цветов — автоматически.
+        <div class="astat">
+          <div class="astat-num">AI</div>
+          <div class="astat-lbl" data-ru="Видео" data-en="Video">Видео</div>
         </div>
-        <span class="feature-tag tag-cyan">Реставрация</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon icon-green">🖼️</div>
-        <div class="feature-title">Генерация изображений</div>
-        <div class="feature-desc">
-          Text-to-image с поддержкой различных стилей: фото, арт, иллюстрации, 3D-рендер.
-        </div>
-        <span class="feature-tag tag-green">Генерация</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon icon-pink">🎨</div>
-        <div class="feature-title">Стилизация</div>
-        <div class="feature-desc">
-          Перенос стиля между изображениями. Аниме, реализм, масло, акварель — любой стиль.
-        </div>
-        <span class="feature-tag tag-pink">Стиль</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon icon-amber">⚡</div>
-        <div class="feature-title">API & Интеграции</div>
-        <div class="feature-desc">
-          REST API для интеграции в ваши проекты. Python, JS SDK и подробная документация.
-        </div>
-        <span class="feature-tag tag-amber">Разработчикам</span>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <div class="how-section" id="how">
-    <div class="how-inner">
-      <div class="section-eyebrow">Процесс</div>
-      <h2 class="section-title">Как это работает</h2>
-      <p class="section-desc">Три простых шага от идеи до результата</p>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-title">Загрузите медиа</div>
-          <div class="step-desc">Фото, видео или просто введите текстовый промпт для генерации</div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-title">Выберите инструмент</div>
-          <div class="step-desc">Апскейлинг, генерация, стилизация — выберите нужную функцию</div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-title">Получите результат</div>
-          <div class="step-desc">Скачайте готовый файл или используйте через API</div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-title">Интегрируйте</div>
-          <div class="step-desc">Подключите к своему проекту через REST API или SDK</div>
+        <div class="astat">
+          <div class="astat-num">∞</div>
+          <div class="astat-lbl" data-ru="Идей" data-en="Ideas">Идей</div>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-glow"></div>
-    <div class="cta-box">
-      <h2>Готовы начать<br/><span class="gradient-text">строить будущее?</span></h2>
-      <p>Присоединяйтесь к разработке. Открытый исходный код, открытое сообщество.</p>
-      <div class="hero-actions">
-        <a href="#features" class="btn-primary">Изучить возможности</a>
-        <a href="#how" class="btn-ghost">Как это работает</a>
+<hr class="sec-divider" />
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="eyebrow" data-ru="Обо мне" data-en="About Me">Обо мне</div>
+  <h2 class="sec-title" data-ru="Строю будущее с помощью ИИ" data-en="Building the future with AI">Строю будущее с помощью ИИ</h2>
+  <p class="sec-sub" data-ru="Разработчик и энтузиаст искусственного интеллекта" data-en="AI developer and enthusiast">Разработчик и энтузиаст искусственного интеллекта</p>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p data-ru="Меня зовут Мейрбек, и я занимаюсь разработкой AI-инструментов для работы с медиаконтентом. Моя специализация — апскейлинг изображений, генерация видео с помощью нейросетей и автоматизация медиа-пайплайнов." data-en="My name is Meirbek, and I develop AI tools for media content. My specialization is image upscaling, AI-powered video generation, and media pipeline automation.">
+        Меня зовут Мейрбек, и я занимаюсь разработкой AI-инструментов для работы с медиаконтентом. Моя специализация — апскейлинг изображений, генерация видео с помощью нейросетей и автоматизация медиа-пайплайнов.
+      </p>
+      <p data-ru="Я верю, что ИИ должен быть доступным и полезным инструментом для каждого. Поэтому создаю решения, которые не просто впечатляют технически, но и реально помогают в работе — экономят время, повышают качество и открывают новые возможности." data-en="I believe AI should be an accessible and useful tool for everyone. That's why I create solutions that aren't just technically impressive, but actually help in real work — saving time, improving quality, and opening new possibilities.">
+        Я верю, что ИИ должен быть доступным и полезным инструментом для каждого. Поэтому создаю решения, которые не просто впечатляют технически, но и реально помогают в работе — экономят время, повышают качество и открывают новые возможности.
+      </p>
+      <div class="skills-wrap">
+        <span class="skill-tag">AI Upscaling</span>
+        <span class="skill-tag">Video Generation</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Stable Diffusion</span>
+        <span class="skill-tag">ComfyUI</span>
+        <span class="skill-tag">ControlNet</span>
+        <span class="skill-tag">FFmpeg</span>
+        <span class="skill-tag">REST API</span>
       </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <span class="logo">⬡ NeuralForge</span>
-    <p>Сделано с ❤️ для AI-сообщества</p>
-    <p style="font-size:13px; color:var(--muted);">MIT License · Open Source</p>
-  </footer>
+    <div class="about-right">
+      <div class="about-card">
+        <div class="about-icon">🔮</div>
+        <div>
+          <h4 data-ru="Апскейлинг до 4K" data-en="Upscaling to 4K">Апскейлинг до 4K</h4>
+          <p data-ru="Улучшаю качество любых изображений с помощью нейросетей — до 4K без артефактов" data-en="Enhance any image quality with neural networks — up to 4K without artifacts">Улучшаю качество любых изображений с помощью нейросетей — до 4K без артефактов</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🎬</div>
+        <div>
+          <h4 data-ru="AI Генерация видео" data-en="AI Video Generation">AI Генерация видео</h4>
+          <p data-ru="Создаю видеоконтент из текста или изображений с помощью современных AI-моделей" data-en="Create video content from text or images using cutting-edge AI models">Создаю видеоконтент из текста или изображений с помощью современных AI-моделей</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">⚡</div>
+        <div>
+          <h4 data-ru="Быстро и качественно" data-en="Fast and High Quality">Быстро и качественно</h4>
+          <p data-ru="Короткие сроки, открытая коммуникация и результат, который превышает ожидания" data-en="Short deadlines, open communication and results that exceed expectations">Короткие сроки, открытая коммуникация и результат, который превышает ожидания</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sec-divider" />
+
+<!-- PORTFOLIO -->
+<section class="sec" id="portfolio">
+  <div class="eyebrow" data-ru="Проекты" data-en="Portfolio">Проекты</div>
+  <h2 class="sec-title" data-ru="Что я создал" data-en="What I've Built">Что я создал</h2>
+  <p class="sec-sub" data-ru="Реальные AI-проекты, которые уже работают" data-en="Real AI projects that already work">Реальные AI-проекты, которые уже работают</p>
+
+  <div class="portfolio-grid">
+    <div class="proj-card">
+      <div class="proj-thumb thumb-up">🔮</div>
+      <div class="proj-body">
+        <span class="proj-tag tag-purple" data-ru="Изображения" data-en="Images">Изображения</span>
+        <div class="proj-title" data-ru="AI Upscaler 4K" data-en="AI Upscaler 4K">AI Upscaler 4K</div>
+        <div class="proj-desc" data-ru="Инструмент для увеличения разрешения изображений до 4K с сохранением деталей и без артефактов" data-en="Tool for upscaling images to 4K while preserving details and without artifacts">Инструмент для увеличения разрешения изображений до 4K с сохранением деталей и без артефактов</div>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-thumb thumb-vid">🎬</div>
+      <div class="proj-body">
+        <span class="proj-tag tag-blue" data-ru="Видео" data-en="Video">Видео</span>
+        <div class="proj-title" data-ru="Text-to-Video AI" data-en="Text-to-Video AI">Text-to-Video AI</div>
+        <div class="proj-desc" data-ru="Генерация коротких видеороликов из текстового описания с помощью современных диффузионных моделей" data-en="Generate short videos from text descriptions using modern diffusion models">Генерация коротких видеороликов из текстового описания с помощью современных диффузионных моделей</div>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-thumb thumb-res">✨</div>
+      <div class="proj-body">
+        <span class="proj-tag tag-green" data-ru="Реставрация" data-en="Restoration">Реставрация</span>
+        <div class="proj-title" data-ru="Photo Restore" data-en="Photo Restore">Photo Restore</div>
+        <div class="proj-desc" data-ru="Восстановление старых и повреждённых фотографий — удаление царапин, шума, восстановление цветов" data-en="Restore old and damaged photos — remove scratches, noise, restore colors">Восстановление старых и повреждённых фотографий — удаление царапин, шума, восстановление цветов</div>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-thumb thumb-stl">🎨</div>
+      <div class="proj-body">
+        <span class="proj-tag tag-pink" data-ru="Стилизация" data-en="Style Transfer">Стилизация</span>
+        <div class="proj-title" data-ru="Style Transfer AI" data-en="Style Transfer AI">Style Transfer AI</div>
+        <div class="proj-desc" data-ru="Перенос художественного стиля на фотографии — аниме, масляная живопись, акварель и другие" data-en="Transfer artistic styles onto photos — anime, oil painting, watercolor and more">Перенос художественного стиля на фотографии — аниме, масляная живопись, акварель и другие</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sec-divider" />
+
+<!-- PRICING -->
+<section class="sec" id="pricing">
+  <div class="eyebrow" data-ru="Услуги и цены" data-en="Services & Pricing">Услуги и цены</div>
+  <h2 class="sec-title" data-ru="Выберите нужное" data-en="Choose What You Need">Выберите нужное</h2>
+  <p class="sec-sub" data-ru="Прозрачные цены, никаких скрытых платежей" data-en="Transparent pricing, no hidden fees">Прозрачные цены, никаких скрытых платежей</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-icon">🔮</div>
+      <div class="price-name" data-ru="Апскейлинг" data-en="Upscaling">Апскейлинг</div>
+      <div class="price-amount">$10 <span data-ru="/ фото" data-en="/ photo">/ фото</span></div>
+      <div class="price-desc" data-ru="Улучшение качества и разрешения изображений" data-en="Enhance quality and resolution of images">Улучшение качества и разрешения изображений</div>
+      <ul class="price-features">
+        <li data-ru="До 4K разрешения" data-en="Up to 4K resolution">До 4K разрешения</li>
+        <li data-ru="Без артефактов" data-en="No artifacts">Без артефактов</li>
+        <li data-ru="Срок: 1-2 дня" data-en="Timeline: 1-2 days">Срок: 1-2 дня</li>
+      </ul>
+    </div>
+
+    <div class="price-card featured">
+      <div class="featured-badge" data-ru="Популярное" data-en="Popular">Популярное</div>
+      <div class="price-icon">🎬</div>
+      <div class="price-name" data-ru="AI Видео" data-en="AI Video">AI Видео</div>
+      <div class="price-amount">$50 <span data-ru="/ видео" data-en="/ video">/ видео</span></div>
+      <div class="price-desc" data-ru="Генерация видео из текста или изображения" data-en="Video generation from text or image">Генерация видео из текста или изображения</div>
+      <ul class="price-features">
+        <li data-ru="До 30 секунд" data-en="Up to 30 seconds">До 30 секунд</li>
+        <li data-ru="HD/4K качество" data-en="HD/4K quality">HD/4K качество</li>
+        <li data-ru="Срок: 2-3 дня" data-en="Timeline: 2-3 days">Срок: 2-3 дня</li>
+        <li data-ru="Правки включены" data-en="Revisions included">Правки включены</li>
+      </ul>
+    </div>
+
+    <div class="price-card">
+      <div class="price-icon">⚙️</div>
+      <div class="price-name" data-ru="Кастомный проект" data-en="Custom Project">Кастомный проект</div>
+      <div class="price-amount" data-ru="Договорная" data-en="By agreement">Договорная</div>
+      <div class="price-desc" data-ru="Разработка AI-инструмента под ваши задачи" data-en="Develop an AI tool for your specific needs">Разработка AI-инструмента под ваши задачи</div>
+      <ul class="price-features">
+        <li data-ru="Любая сложность" data-en="Any complexity">Любая сложность</li>
+        <li data-ru="API интеграция" data-en="API integration">API интеграция</li>
+        <li data-ru="Поддержка после сдачи" data-en="Post-delivery support">Поддержка после сдачи</li>
+        <li data-ru="Персональный подход" data-en="Personal approach">Персональный подход</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="sec-divider" />
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+  <div class="eyebrow" data-ru="Контакты" data-en="Contact">Контакты</div>
+  <h2 class="sec-title" data-ru="Давайте работать вместе" data-en="Let's Work Together">Давайте работать вместе</h2>
+  <p class="sec-sub" data-ru="Напишите мне — отвечу в течение дня" data-en="Write to me — I'll reply within the day">Напишите мне — отвечу в течение дня</p>
+
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3 data-ru="Связаться со мной" data-en="Get in Touch">Связаться со мной</h3>
+      <p data-ru="Готов обсудить ваш проект, ответить на вопросы или просто познакомиться. Выберите удобный способ связи:" data-en="Ready to discuss your project, answer questions or just connect. Choose a convenient way to reach me:">
+        Готов обсудить ваш проект, ответить на вопросы или просто познакомиться. Выберите удобный способ связи:
+      </p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com" class="contact-link">
+          <div class="contact-link-icon ci-email">✉️</div>
+          <div>
+            <div style="font-weight:500; color:var(--text); font-size:14px;">Email</div>
+            <div style="font-size:12px; color:var(--muted);">your@email.com</div>
+          </div>
+        </a>
+        <a href="https://wa.me/77000000000" class="contact-link" target="_blank">
+          <div class="contact-link-icon ci-wa">💬</div>
+          <div>
+            <div style="font-weight:500; color:var(--text); font-size:14px;">WhatsApp</div>
+            <div style="font-size:12px; color:var(--muted);" data-ru="Написать в WhatsApp" data-en="Message on WhatsApp">Написать в WhatsApp</div>
+          </div>
+        </a>
+        <a href="https://instagram.com/yourhandle" class="contact-link" target="_blank">
+          <div class="contact-link-icon ci-ig">📸</div>
+          <div>
+            <div style="font-weight:500; color:var(--text); font-size:14px;">Instagram</div>
+            <div style="font-size:12px; color:var(--muted);">@yourhandle</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="order-form">
+      <div class="form-title" data-ru="Оставить заявку" data-en="Send a Request">Оставить заявку</div>
+      <div class="form-group">
+        <label data-ru="Ваше имя" data-en="Your Name">Ваше имя</label>
+        <input type="text" placeholder="Иван Иванов" data-placeholder-ru="Иван Иванов" data-placeholder-en="John Smith" />
+      </div>
+      <div class="form-group">
+        <label data-ru="Контакт (email / telegram)" data-en="Contact (email / telegram)">Контакт (email / telegram)</label>
+        <input type="text" placeholder="@username или email" data-placeholder-ru="@username или email" data-placeholder-en="@username or email" />
+      </div>
+      <div class="form-group">
+        <label data-ru="Тип услуги" data-en="Service Type">Тип услуги</label>
+        <select>
+          <option data-ru="Апскейлинг изображений" data-en="Image Upscaling">Апскейлинг изображений</option>
+          <option data-ru="Генерация видео" data-en="Video Generation">Генерация видео</option>
+          <option data-ru="Реставрация фото" data-en="Photo Restoration">Реставрация фото</option>
+          <option data-ru="Кастомный проект" data-en="Custom Project">Кастомный проект</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-ru="Описание задачи" data-en="Task Description">Описание задачи</label>
+        <textarea placeholder="Расскажите о вашем проекте..." data-placeholder-ru="Расскажите о вашем проекте..." data-placeholder-en="Tell me about your project..."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()" data-ru="Отправить заявку →" data-en="Send Request →">Отправить заявку →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-logo">Upscale<span>Studio</span></span>
+  <p data-ru="© 2025 Мейрбек Муслимов" data-en="© 2025 Meirbek Muslimov">© 2025 Мейрбек Муслимов</p>
+  <p data-ru="Все права защищены" data-en="All rights reserved">Все права защищены</p>
+</footer>
+
+<script>
+  let currentLang = 'ru';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+    document.querySelectorAll('[data-ru]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val) el.textContent = val;
+    });
+
+    document.querySelectorAll('[data-placeholder-ru]').forEach(el => {
+      const val = el.getAttribute('data-placeholder-' + lang);
+      if (val) el.placeholder = val;
+    });
+
+    document.querySelectorAll('select option[data-ru]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val) el.textContent = val;
+    });
+
+    const avatarName = document.querySelector('.avatar-name');
+    if (avatarName) avatarName.textContent = lang === 'ru' ? 'Мейрбек Муслимов' : 'Meirbek Muslimov';
+  }
+
+  function handleSubmit() {
+    const msg = currentLang === 'ru' ? 'Спасибо! Скоро свяжусь с вами 🙌' : 'Thank you! I\'ll be in touch soon 🙌';
+    alert(msg);
+  }
+</script>
 
 </body>
 </html>
