@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuralForge — AI Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08080F;
+      --bg2: #0F0F1A;
+      --bg3: #13131F;
+      --card: #0E0E1C;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --text: #F0EFFF;
+      --muted: #8E8BA8;
+      --accent1: #7C3AED;
+      --accent2: #2563EB;
+      --accent3: #06B6D4;
+      --glow: rgba(124,58,237,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ——— NAV ——— */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(8,8,15,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #A78BFA, #60A5FA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 9px 22px;
+      border: 1px solid rgba(124,58,237,0.5);
+      border-radius: 8px;
+      background: rgba(124,58,237,0.12);
+      color: #A78BFA;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: rgba(124,58,237,0.22);
+      border-color: rgba(124,58,237,0.8);
+    }
+
+    /* ——— HERO ——— */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+
+    .orb1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .orb2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
+      bottom: 0; right: 10%;
+    }
+
+    .orb3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
+      bottom: 100px; left: 5%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 100px;
+      background: rgba(124,58,237,0.1);
+      font-size: 13px;
+      color: #A78BFA;
+      font-weight: 500;
+      margin-bottom: 28px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #A78BFA;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(42px, 7vw, 84px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      max-width: 900px;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 50%, #34D399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+      background-size: 200%;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 44px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #7C3AED, #2563EB);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 32px rgba(124,58,237,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(124,58,237,0.5);
+    }
+
+    .btn-ghost {
+      padding: 14px 32px;
+      background: transparent;
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    /* ——— STATS ——— */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      padding: 28px 48px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+      margin-top: 80px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #A78BFA, #60A5FA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+      font-weight: 400;
+    }
+
+    /* ——— FEATURES ——— */
+    .section {
+      padding: 100px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #A78BFA;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      max-width: 580px;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 480px;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 60px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(167,139,250,0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(124,58,237,0.35);
+      transform: translateY(-4px);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .icon-purple { background: rgba(124,58,237,0.15); }
+    .icon-blue   { background: rgba(37,99,235,0.15); }
+    .icon-cyan   { background: rgba(6,182,212,0.15); }
+    .icon-green  { background: rgba(16,185,129,0.15); }
+    .icon-pink   { background: rgba(236,72,153,0.15); }
+    .icon-amber  { background: rgba(245,158,11,0.15); }
+
+    .feature-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .feature-tag {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .tag-purple { background: rgba(124,58,237,0.15); color: #A78BFA; }
+    .tag-blue   { background: rgba(37,99,235,0.15);  color: #93C5FD; }
+    .tag-cyan   { background: rgba(6,182,212,0.15);  color: #67E8F9; }
+    .tag-green  { background: rgba(16,185,129,0.15); color: #6EE7B7; }
+    .tag-pink   { background: rgba(236,72,153,0.15); color: #F9A8D4; }
+    .tag-amber  { background: rgba(245,158,11,0.15); color: #FCD34D; }
+
+    /* ——— HOW IT WORKS ——— */
+    .how-section {
+      padding: 100px 48px;
+      background: var(--bg2);
+    }
+
+    .how-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      margin-top: 60px;
+      position: relative;
+    }
+
+    .steps::after {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.4), rgba(37,99,235,0.4), transparent);
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7C3AED, #2563EB);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 30px rgba(124,58,237,0.3);
+    }
+
+    .step-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ——— CTA ——— */
+    .cta-section {
+      padding: 120px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cta-box {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid rgba(124,58,237,0.25);
+      border-radius: 24px;
+      padding: 64px 48px;
+      position: relative;
+    }
+
+    .cta-box h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+
+    /* ——— GITHUB SECTION ——— */
+    .github-section {
+      padding: 80px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .github-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .github-left h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .github-left p { color: var(--muted); font-size: 15px; max-width: 480px; }
+
+    .github-steps {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .github-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .gh-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(124,58,237,0.2);
+      border: 1px solid rgba(124,58,237,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #A78BFA;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .gh-text { color: var(--muted); line-height: 1.5; }
+    .gh-text code {
+      background: rgba(255,255,255,0.07);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #A78BFA;
+    }
+
+    /* ——— FOOTER ——— */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #A78BFA, #60A5FA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    footer p { font-size: 13px; color: var(--muted); }
+
+    /* ——— RESPONSIVE ——— */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .section, .github-section { padding: 60px 20px; }
+      .how-section { padding: 60px 20px; }
+      .cta-section { padding: 60px 20px; }
+      .stats-row { gap: 32px; padding: 24px 20px; }
+      .steps::after { display: none; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .cta-box { padding: 40px 24px; }
+      .github-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">⬡ NeuralForge</span>
+    <ul class="nav-links">
+      <li><a href="#features">Возможности</a></li>
+      <li><a href="#how">Как работает</a></li>
+      <li><a href="#github">GitHub</a></li>
+    </ul>
+    <a href="#github" class="nav-cta">Начать →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+
+    <div class="hero-badge">AI Platform — Beta</div>
+
+    <h1>
+      Мощный ИИ для<br/>
+      <span class="gradient-text">Видео, Изображений</span><br/>
+      и многого другого
+    </h1>
+
+    <p class="hero-sub">
+      Апскейлинг изображений, генерация видео, обработка медиа — всё в одном месте.
+      Создан для разработчиков и креаторов.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#features" class="btn-primary">Изучить возможности</a>
+      <a href="#github" class="btn-ghost">Открыть на GitHub</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num">4K+</div>
+      <div class="stat-label">Апскейлинг до 4K</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">60fps</div>
+      <div class="stat-label">Генерация видео</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">10x</div>
+      <div class="stat-label">Быстрее вручную</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">API</div>
+      <div class="stat-label">Открытый доступ</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="section-eyebrow">Возможности</div>
+    <h2 class="section-title">Всё, что нужно для работы с ИИ-медиа</h2>
+    <p class="section-desc">
+      Набор инструментов для генерации, улучшения и обработки медиаконтента с помощью нейросетей.
+    </p>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon icon-purple">🔮</div>
+        <div class="feature-title">AI Апскейлинг</div>
+        <div class="feature-desc">
+          Увеличение разрешения изображений до 4K без потери качества. Умные алгоритмы восстанавливают детали.
+        </div>
+        <span class="feature-tag tag-purple">Изображения</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">🎬</div>
+        <div class="feature-title">Генерация видео</div>
+        <div class="feature-desc">
+          Создание видеороликов из текстового описания или изображений. Поддержка до 60 fps.
+        </div>
+        <span class="feature-tag tag-blue">Видео</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-cyan">✨</div>
+        <div class="feature-title">Улучшение качества</div>
+        <div class="feature-desc">
+          Удаление шумов, восстановление старых фото, коррекция цветов — автоматически.
+        </div>
+        <span class="feature-tag tag-cyan">Реставрация</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-green">🖼️</div>
+        <div class="feature-title">Генерация изображений</div>
+        <div class="feature-desc">
+          Text-to-image с поддержкой различных стилей: фото, арт, иллюстрации, 3D-рендер.
+        </div>
+        <span class="feature-tag tag-green">Генерация</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-pink">🎨</div>
+        <div class="feature-title">Стилизация</div>
+        <div class="feature-desc">
+          Перенос стиля между изображениями. Аниме, реализм, масло, акварель — любой стиль.
+        </div>
+        <span class="feature-tag tag-pink">Стиль</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-amber">⚡</div>
+        <div class="feature-title">API & Интеграции</div>
+        <div class="feature-desc">
+          REST API для интеграции в ваши проекты. Python, JS SDK и подробная документация.
+        </div>
+        <span class="feature-tag tag-amber">Разработчикам</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section" id="how">
+    <div class="how-inner">
+      <div class="section-eyebrow">Процесс</div>
+      <h2 class="section-title">Как это работает</h2>
+      <p class="section-desc">Три простых шага от идеи до результата</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-title">Загрузите медиа</div>
+          <div class="step-desc">Фото, видео или просто введите текстовый промпт для генерации</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-title">Выберите инструмент</div>
+          <div class="step-desc">Апскейлинг, генерация, стилизация — выберите нужную функцию</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-title">Получите результат</div>
+          <div class="step-desc">Скачайте готовый файл или используйте через API</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-title">Интегрируйте</div>
+          <div class="step-desc">Подключите к своему проекту через REST API или SDK</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GITHUB GUIDE -->
+  <section class="github-section" id="github">
+    <div class="github-card">
+      <div class="github-left">
+        <h3>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color:#A78BFA">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          Как разместить на GitHub Pages
+        </h3>
+        <p>Разместите этот сайт бесплатно через GitHub Pages за несколько минут.</p>
+
+        <div class="github-steps">
+          <div class="github-step">
+            <div class="gh-num">1</div>
+            <div class="gh-text">Создайте репозиторий на <strong>github.com</strong> — назовите его <code>имя-проекта</code> или <code>username.github.io</code></div>
+          </div>
+          <div class="github-step">
+            <div class="gh-num">2</div>
+            <div class="gh-text">Загрузите файл <code>index.html</code> в корень репозитория через кнопку «Add file» → «Upload files»</div>
+          </div>
+          <div class="github-step">
+            <div class="gh-num">3</div>
+            <div class="gh-text">Зайдите в <code>Settings</code> → <code>Pages</code>, в разделе Source выберите ветку <code>main</code> и папку <code>/ (root)</code></div>
+          </div>
+          <div class="github-step">
+            <div class="gh-num">4</div>
+            <div class="gh-text">Нажмите <strong>Save</strong> — через 1-2 минуты сайт будет доступен по адресу <code>username.github.io/имя-репозитория</code></div>
+          </div>
+          <div class="github-step">
+            <div class="gh-num">5</div>
+            <div class="gh-text">Для обновлений просто заменяйте <code>index.html</code> в репозитории — GitHub сам пересоберёт сайт</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-box">
+      <h2>Готовы начать<br/><span class="gradient-text">строить будущее?</span></h2>
+      <p>Присоединяйтесь к разработке. Открытый исходный код, открытое сообщество.</p>
+      <div class="hero-actions">
+        <a href="https://github.com" class="btn-primary" target="_blank">Открыть GitHub</a>
+        <a href="#features" class="btn-ghost">Узнать больше</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="logo">⬡ NeuralForge</span>
+    <p>Сделано с ❤️ для AI-сообщества</p>
+    <p style="font-size:13px; color:var(--muted);">MIT License · Open Source</p>
+  </footer>
+
+</body>
+</html>
